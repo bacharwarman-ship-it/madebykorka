@@ -1,503 +1,377 @@
 <!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>made by korka — вязаные игрушки ручной работы</title>
-  <meta name="description" content="Вязаные зверята, существа и чудики ручной работы: ктулхукотики, покемоны, Поро, Аппа, метровые Несси и Чупакабрики. Повтор любой игрушки из каталога под заказ.">
-  <meta name="theme-color" content="#3d5229">
-  <meta property="og:title" content="made by korka — вязаные игрушки ручной работы">
-  <meta property="og:description" content="Связано вручную, чтобы обнимать. Каталог и заявка на свою игрушку.">
-  <meta property="og:image" content="photos_by_category/01_ktulhucats/03_green_purple/ktulhucat_green_purple_01.jpg">
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Korka — вязаное ателье игрушек ручной работы</title>
+<meta name="description" content="Вязаные игрушки ручной работы: ктулхукотики, покемоны, Аппа, метровые Несси и Чупакабрики. Повтор любой работы из коллекции и персонажи по вашему референсу.">
+<meta name="theme-color" content="#1b2415">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Korka — вязаное ателье">
+<meta property="og:description" content="Игрушки, связанные вручную. Коллекция и заказ своего персонажа.">
+<meta property="og:image" content="photos_by_category/01_ktulhucats/03_green_purple/ktulhucat_green_purple_01.jpg">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600;700&display=swap">
+<link rel="preload" as="image" href="assets/img/moss-dark-900.jpg" media="(max-width: 760px)">
+<link rel="preload" as="image" href="assets/img/moss-dark-1920.jpg" media="(min-width: 761px)">
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<!-- ================= SVG-спрайт ================= -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <defs>
-    <filter id="fuzz" x="-10%" y="-10%" width="120%" height="120%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3" result="n"/>
-      <feDisplacementMap in="SourceGraphic" in2="n" scale="7" xChannelSelector="R" yChannelSelector="G"/>
-    </filter>
-    <filter id="fuzz-soft" x="-10%" y="-10%" width="120%" height="120%">
-      <feTurbulence type="fractalNoise" baseFrequency="1.4" numOctaves="2" seed="8" result="n"/>
-      <feDisplacementMap in="SourceGraphic" in2="n" scale="4" xChannelSelector="R" yChannelSelector="G"/>
-    </filter>
-    <radialGradient id="ballShade" cx="35%" cy="30%" r="75%">
-      <stop offset="0" stop-color="#fff" stop-opacity=".35"/>
-      <stop offset=".55" stop-color="#fff" stop-opacity="0"/>
-      <stop offset="1" stop-color="#000" stop-opacity=".28"/>
-    </radialGradient>
-  </defs>
-
-  <symbol id="i-yarn" viewBox="0 0 64 64">
-    <circle cx="32" cy="32" r="26" fill="currentColor"/>
-    <g fill="none" stroke="rgba(0,0,0,.28)" stroke-width="2.2" stroke-linecap="round">
-      <path d="M10 24c10-6 32-8 46 6"/><path d="M8 34c14-8 34-8 48 2"/><path d="M12 46c12-10 30-12 42-6"/>
-      <path d="M24 8c-6 12-6 34 6 50"/><path d="M36 7c-8 14-6 34 8 48"/>
-    </g>
-    <circle cx="32" cy="32" r="26" fill="url(#ballShade)"/>
-    <path d="M54 44c6 4 8 10 4 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
-  </symbol>
-
-  <symbol id="i-mushroom" viewBox="0 0 64 64">
-    <path d="M26 34c-1 9-2 16-4 22h18c-2-6-3-13-4-22z" fill="#f1e6cf" stroke="#b9a07a" stroke-width="1.5"/>
-    <path d="M6 34C8 18 20 8 32 8s24 10 26 26c-8 3-44 3-52 0z" fill="#b8503f"/>
-    <path d="M6 34C8 18 20 8 32 8s24 10 26 26" fill="none" stroke="#8a3a2e" stroke-width="1.5"/>
-    <g fill="#f6ead5"><circle cx="22" cy="20" r="3.2"/><circle cx="36" cy="16" r="2.4"/><circle cx="44" cy="26" r="3"/><circle cx="16" cy="29" r="2"/><circle cx="30" cy="27" r="2.2"/></g>
-  </symbol>
-
-  <symbol id="i-fern" viewBox="0 0 60 100">
-    <path d="M30 98C30 70 28 40 34 4" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
-    <g fill="currentColor">
-      <path d="M31 86c-8-2-16-1-22 4 7 2 15 1 22-4z"/><path d="M31 86c7-4 15-5 22-2-6 4-14 5-22 2z"/>
-      <path d="M31 72c-8-3-15-2-21 2 7 3 14 2 21-2z"/><path d="M31 72c7-4 14-5 21-2-6 4-14 5-21 2z"/>
-      <path d="M31 58c-7-3-13-3-18 1 6 3 12 2 18-1z"/><path d="M31 58c6-4 12-5 18-3-5 4-12 5-18 3z"/>
-      <path d="M32 44c-6-3-11-3-15 0 5 3 10 3 15 0z"/><path d="M32 44c5-4 10-5 15-3-4 4-10 5-15 3z"/>
-      <path d="M33 31c-5-3-9-3-12 0 4 2 8 2 12 0z"/><path d="M33 31c4-3 8-4 12-2-3 3-8 4-12 2z"/>
-      <path d="M34 19c-3-2-6-2-8 0 3 2 5 2 8 0z"/><path d="M34 19c3-2 6-3 8-1-2 2-5 3-8 1z"/>
-    </g>
-  </symbol>
-
-  <symbol id="i-leaf" viewBox="0 0 40 40">
-    <path d="M4 36C4 16 16 4 36 4c0 20-12 32-32 32z" fill="currentColor"/>
-    <path d="M6 34L30 10" stroke="rgba(0,0,0,.25)" stroke-width="1.6"/>
-  </symbol>
-
-  <symbol id="i-pin" viewBox="0 0 30 60">
-    <rect x="7" y="2" width="16" height="56" rx="4" fill="#c99a63"/>
-    <rect x="7" y="2" width="16" height="56" rx="4" fill="none" stroke="#8d6235" stroke-width="1.4"/>
-    <path d="M15 4v52" stroke="#8d6235" stroke-width="1.4"/>
-    <rect x="4" y="22" width="22" height="7" rx="2" fill="#9aa3a6"/>
-  </symbol>
-
-  <symbol id="i-button" viewBox="0 0 40 40">
-    <circle cx="20" cy="20" r="18" fill="#a8743f"/>
-    <circle cx="20" cy="20" r="13" fill="none" stroke="#7b5126" stroke-width="1.6"/>
-    <g fill="#5e3a17"><circle cx="15.5" cy="15.5" r="2.4"/><circle cx="24.5" cy="15.5" r="2.4"/><circle cx="15.5" cy="24.5" r="2.4"/><circle cx="24.5" cy="24.5" r="2.4"/></g>
-    <path class="btn-thread" d="M15.5 15.5L24.5 24.5M24.5 15.5L15.5 24.5" stroke="#f3e7cf" stroke-width="2" stroke-linecap="round"/>
-  </symbol>
-
-  <symbol id="i-tg" viewBox="0 0 24 24">
-    <path fill="currentColor" d="M21.9 4.3 18.7 19.4c-.2 1.1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.3-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6.2 13l-4.8-1.5c-1-.3-1.1-1 .2-1.5L20.5 2.9c.9-.3 1.6.2 1.4 1.4z"/>
-  </symbol>
-
-  <symbol id="i-needles" viewBox="0 0 120 120">
-    <g stroke-linecap="round">
-      <path d="M14 106L104 16" stroke="#b9875a" stroke-width="5"/>
-      <path d="M22 16l84 90" stroke="#a8743f" stroke-width="5"/>
-      <circle cx="106" cy="14" r="6" fill="#7b5126"/><circle cx="20" cy="14" r="6" fill="#7b5126"/>
-    </g>
-  </symbol>
+  <symbol id="i-stitch" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M7 5c.6 9 3.6 16 9 23M25 5c-.6 9-3.6 16-9 23"/><path d="M12 5c.5 6 2 10 4 14M20 5c-.5 6-2 10-4 14"/></g></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M20 12H5M11 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M6 12h12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V4M7.5 8.5L12 4l4.5 4.5"/><path d="M4 14v4.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V14"/></g></symbol>
+  <symbol id="i-tg" viewBox="0 0 24 24"><path fill="currentColor" d="M21.9 4.3 18.7 19.4c-.2 1.1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.3-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6.2 13l-4.8-1.5c-1-.3-1.1-1 .2-1.5L20.5 2.9c.9-.3 1.6.2 1.4 1.4z"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 8h16M4 16h16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
 </svg>
 
-<!-- ================= Шапка ================= -->
-<header class="topbar" id="top">
-  <a class="logo" href="#top" aria-label="made by korka — на главную">
-    <svg class="logo__ball"><use href="#i-yarn"/></svg>
-    <span class="logo__text">made by <b>korka</b></span>
+<header class="hdr" id="hdr">
+  <a class="brand" href="#top" aria-label="Korka, на главную">
+    <svg class="brand__mark"><use href="#i-stitch"/></svg>
+    <span class="brand__name">Korka</span>
+    <span class="brand__sub">вязаное ателье</span>
   </a>
-  <nav class="nav" id="nav">
-    <a href="#catalog">Каталог</a>
-    <a href="#portfolio">Уже дома</a>
+  <nav class="hdr__nav" id="nav" aria-label="Разделы">
+    <a href="#catalog">Коллекция</a>
+    <a href="#works">Работы</a>
     <a href="#how">Как заказать</a>
     <a href="#faq">Вопросы</a>
+    <a class="hdr__navcta" href="#order">Оставить заявку</a>
   </nav>
-  <a class="btn btn--moss btn--sm topbar__cta" href="#order"><svg><use href="#i-button"/></svg>Заказать</a>
-  <button class="burger" id="burger" aria-label="Меню" aria-expanded="false"><span></span><span></span><span></span></button>
+  <a class="btn btn--sm btn--light hdr__cta" href="#order">Заказать</a>
+  <button class="hdr__menu" id="menuBtn" aria-label="Меню" aria-expanded="false" aria-controls="nav"><svg><use href="#i-menu"/></svg></button>
 </header>
 
 <main>
-<!-- ================= HERO ================= -->
-<section class="hero">
-  <div class="hero__text">
-    <p class="eyebrow">вязаные игрушки ручной работы</p>
-    <h1>Связано вручную,<br><span class="hand">чтобы обнимать</span></h1>
-    <p class="lead">Ктулхукотики, покемоны, Поро, Аппа, метровые Несси и Чупакабрики. Любую игрушку из каталога можно повторить под заказ, а своего персонажа обсудить по референсу.</p>
-    <div class="hero__actions">
-      <a class="btn btn--moss" href="#catalog">Смотреть каталог</a>
-      <a class="btn btn--ghost" href="#order">Оставить заявку</a>
+<!-- HERO -->
+<section class="hero" id="top">
+  <picture class="hero__bg" aria-hidden="true">
+    <source media="(max-width: 760px)" srcset="assets/img/moss-dark-900.jpg">
+    <img src="assets/img/moss-dark-1920.jpg" alt="" fetchpriority="high" decoding="async">
+  </picture>
+  <div class="hero__inner wrap">
+    <div class="hero__copy">
+      <p class="kicker">Вязаное ателье · ручная работа</p>
+      <h1>Игрушки, связанные <em>вручную</em></h1>
+      <p class="hero__lead">Ктулхукотики, покемоны, Аппа и метровые Несси. Любую работу из коллекции можно повторить, а своего персонажа обсудить по референсу.</p>
+      <div class="hero__cta">
+        <a class="btn btn--light" href="#catalog">Смотреть коллекцию</a>
+        <a class="btn btn--line" href="#order">Заказать свою <svg><use href="#i-arrow"/></svg></a>
+      </div>
     </div>
-    <ul class="hero__facts">
-      <li><b data-stat="count">31</b><span>работа в каталоге</span></li>
-      <li><b data-stat="min">1 200 ₽</b><span>самая маленькая цена</span></li>
-      <li><b>от 3 дней</b><span>на изготовление</span></li>
-    </ul>
+    <figure class="hero__feature" id="heroFeature" data-id="">
+      <div class="arch"><img id="heroImg" src="photos_by_category/01_ktulhucats/03_green_purple/ktulhucat_green_purple_01.jpg" alt="Вязаный ктулхукотик на мху" decoding="async"></div>
+      <figcaption><span id="heroName">Ктулхукотик</span><span id="heroMeta"></span></figcaption>
+    </figure>
   </div>
-
-  <div class="hero__art" aria-hidden="true">
-    <div class="twine">
-      <svg class="twine__line" viewBox="0 0 600 80" preserveAspectRatio="none"><path d="M0 10 Q300 90 600 10" fill="none" stroke="#8d6a43" stroke-width="2.5" stroke-dasharray="1 0"/></svg>
-      <figure class="polaroid polaroid--1" data-photo="photos_by_category/01_ktulhucats/03_green_purple/ktulhucat_green_purple_01.jpg"><figcaption>ктулхукотик</figcaption></figure>
-      <figure class="polaroid polaroid--2" data-photo="photos_by_category/07_animals_and_custom/03_plush_fox_lisichka/plush_fox_lisichka_01.jpg"><figcaption>лисичка</figcaption></figure>
-      <figure class="polaroid polaroid--3" data-photo="photos_by_category/02_avatar_fandom/02_appa_fluffy_fancy/appa_fluffy_fancy_01.jpg"><figcaption>Аппа</figcaption></figure>
-    </div>
-    <div class="moss-hill">
-      <svg class="yarn-big" viewBox="0 0 64 64" style="color:#7f9a4a"><use href="#i-yarn"/></svg>
-      <svg class="needles" viewBox="0 0 120 120"><use href="#i-needles"/></svg>
-      <svg class="mush mush--1"><use href="#i-mushroom"/></svg>
-      <svg class="mush mush--2"><use href="#i-mushroom"/></svg>
-      <svg class="fern fern--1" style="color:#56733a"><use href="#i-fern"/></svg>
-      <svg class="fern fern--2" style="color:#6d8c45"><use href="#i-fern"/></svg>
-      <svg class="hill" viewBox="0 0 600 200" preserveAspectRatio="none">
-        <path filter="url(#fuzz)" fill="#4f6b33" d="M0 200V96c30-18 50-30 82-26 26-26 62-34 92-18 22-30 70-40 104-20 30-24 78-26 104 2 26-14 64-12 86 10 32-6 66 6 92 26 18 4 32 10 40 18V200z"/>
-        <path filter="url(#fuzz-soft)" fill="#6a8a43" d="M0 200v-72c34-14 64-22 98-14 30-18 66-20 96-4 30-18 72-20 104-2 34-14 74-10 102 8 32-8 62 0 90 18 18 2 34 8 44 16V200z"/>
-        <g fill="#9cb664" filter="url(#fuzz-soft)">
-          <circle cx="60" cy="150" r="5"/><circle cx="140" cy="132" r="4"/><circle cx="230" cy="150" r="6"/><circle cx="320" cy="128" r="4"/><circle cx="410" cy="148" r="5"/><circle cx="500" cy="136" r="4"/><circle cx="560" cy="160" r="5"/>
-        </g>
-      </svg>
-    </div>
-  </div>
-  <div class="hero__stitch" aria-hidden="true"></div>
+  <dl class="hero__facts wrap">
+    <div><dt data-stat="count">31</dt><dd>работа в коллекции</dd></div>
+    <div><dt data-stat="min">1 200 ₽</dt><dd>стартовая цена</dd></div>
+    <div><dt>3–21</dt><dd>день на изготовление</dd></div>
+    <div><dt>1 м</dt><dd>самые большие работы</dd></div>
+  </dl>
 </section>
 
-<!-- ================= Вязаная лента ================= -->
-<div class="knit-band" aria-hidden="true">
-  <div class="knit-band__track">
-    <span>ручная работа</span><i>✿</i><span>шерсть и плюшевая пряжа</span><i>✿</i><span>повторю любую игрушку из каталога</span><i>✿</i><span>метровые гиганты</span><i>✿</i><span>персонажи по референсу</span><i>✿</i>
-    <span>ручная работа</span><i>✿</i><span>шерсть и плюшевая пряжа</span><i>✿</i><span>повторю любую игрушку из каталога</span><i>✿</i><span>метровые гиганты</span><i>✿</i><span>персонажи по референсу</span><i>✿</i>
-  </div>
-</div>
-
-<!-- ================= КАТАЛОГ ================= -->
-<section class="section catalog" id="catalog">
-  <header class="section__head">
-    <p class="eyebrow">полочка с игрушками</p>
-    <h2>Каталог</h2>
-    <p class="section__sub">Почти всё сейчас вяжется под заказ: выбери понравившегося, и я свяжу такого же. Нажми на карточку, чтобы посмотреть все фото.</p>
-  </header>
-
-  <div class="filters" role="toolbar" aria-label="Фильтр каталога">
-    <div class="spools" id="spools"></div>
-    <div class="filters__right">
-      <label class="toggle"><input type="checkbox" id="onlyStock"><span class="toggle__track"><span class="toggle__knob"></span></span>Только в наличии</label>
-      <label class="select-wrap">
-        <select id="sortBy" aria-label="Сортировка">
-          <option value="new">Сначала новые</option>
-          <option value="cheap">Сначала дешевле</option>
-          <option value="expensive">Сначала дороже</option>
-        </select>
-      </label>
-    </div>
-  </div>
-
-  <div class="grid" id="grid"></div>
-  <p class="empty" id="empty" hidden>Тут пока пусто 🍂 Попробуй другую катушку.</p>
+<!-- ПРИНЦИПЫ -->
+<section class="values wrap" aria-label="Принципы ателье">
+  <article><span class="num">I</span><h3>Только ручная работа</h3><p>Каждую игрушку от первой до последней петли вяжет один мастер.</p></article>
+  <article><span class="num">II</span><h3>Повтор из коллекции</h3><p>Почти любую работу можно связать снова, в тех же или новых цветах.</p></article>
+  <article><span class="num">III</span><h3>Персонажи по референсу</h3><p>Зверята, существа и герои игр по вашей картинке.</p></article>
 </section>
 
-<!-- ================= ПОРТФОЛИО ================= -->
-<section class="section portfolio" id="portfolio">
-  <div class="moss-edge moss-edge--top" aria-hidden="true"></div>
-  <header class="section__head section__head--light">
-    <p class="eyebrow">уже уехали домой</p>
-    <h2>Выполненные заказы</h2>
-    <p class="section__sub">Персонажи, которых вязала по просьбам. Похожего можно заказать: от 1 500 ₽, цена зависит от размера и сложности.</p>
-  </header>
-  <div class="corkboard" id="corkboard"></div>
-  <div class="moss-edge moss-edge--bottom" aria-hidden="true"></div>
+<!-- КОЛЛЕКЦИЯ -->
+<section class="sec" id="catalog">
+  <div class="wrap">
+    <header class="sec__head">
+      <span class="idx">01</span>
+      <h2>Коллекция</h2>
+      <p>Почти всё вяжется под заказ: выберите работу, и мастер свяжет такую же.</p>
+    </header>
+    <div class="bar">
+      <div class="tabs" id="tabs" role="tablist" aria-label="Категории"></div>
+      <div class="bar__tools">
+        <label class="switch"><input type="checkbox" id="onlyStock"><span class="switch__ui" aria-hidden="true"></span>В наличии</label>
+        <label class="select"><span class="sr">Сортировка</span>
+          <select id="sortBy"><option value="new">Сначала новые</option><option value="cheap">Дешевле</option><option value="expensive">Дороже</option></select>
+        </label>
+      </div>
+    </div>
+    <div class="grid" id="grid"></div>
+    <p class="grid__empty" id="empty" hidden>В этой категории сейчас ничего нет.</p>
+    <div class="grid__more"><button class="btn btn--ghost" id="moreBtn" hidden>Показать ещё</button></div>
+  </div>
 </section>
 
-<!-- ================= КАК ЗАКАЗАТЬ ================= -->
-<section class="section how" id="how">
-  <header class="section__head">
-    <p class="eyebrow">по петельке</p>
-    <h2>Как заказать</h2>
-  </header>
-  <ol class="steps">
-    <li class="step"><span class="step__num">1</span><h3>Выбери или придумай</h3><p>Повтор игрушки из каталога, вариант с другими цветами или свой персонаж по референсу.</p></li>
-    <li class="step"><span class="step__num">2</span><h3>Заполни схему заказа</h3><p>Четыре коротких ряда: что вяжем, как выглядит, размер и как с тобой связаться. Сразу увидишь ориентир по цене.</p></li>
-    <li class="step"><span class="step__num">3</span><h3>Заявка летит мне в Telegram</h3><p>Со всеми фото и деталями. Я посмотрю и напишу тебе в указанный контакт.</p></li>
-    <li class="step"><span class="step__num">4</span><h3>Вяжу и отправляю</h3><p>Обычно от 3 дней для малышей до 2–3 недель для больших и сложных игрушек.</p></li>
-  </ol>
+<!-- МОХ -->
+<section class="band" aria-label="О работе">
+  <picture class="band__bg" aria-hidden="true">
+    <source media="(max-width: 760px)" srcset="assets/img/moss-light-900.jpg">
+    <img src="assets/img/moss-light-1800.jpg" alt="" loading="lazy" decoding="async">
+  </picture>
+  <div class="band__inner wrap">
+    <p class="kicker">Медленное ремесло</p>
+    <blockquote>От трёх дней до трёх недель над одной игрушкой. Без фабрик и шаблонов: только пряжа, руки и&nbsp;терпение.</blockquote>
+  </div>
+</section>
 
-  <div class="fit">
-    <div class="fit__card fit__card--yes">
-      <svg class="fit__icon" style="color:#5f7f3b"><use href="#i-leaf"/></svg>
-      <h3>Вяжу с удовольствием</h3>
-      <ul id="fitYes"></ul>
-    </div>
-    <div class="fit__card fit__card--no">
-      <svg class="fit__icon" style="color:#b8503f"><use href="#i-mushroom"/></svg>
-      <h3>Не моя специфика</h3>
-      <ul id="fitNo"></ul>
-      <p class="fit__note">Если сомневаешься, подходит ли твой персонаж, приложи референс в заявке. Так быстрее, чем переписываться «на словах».</p>
+<!-- РАБОТЫ -->
+<section class="sec sec--linen" id="works">
+  <div class="wrap">
+    <header class="sec__head sec__head--row">
+      <div><span class="idx">02</span><h2>Работы на заказ</h2></div>
+      <div class="rail__nav"><button class="circle" data-rail="-1" aria-label="Назад"><svg><use href="#i-back"/></svg></button><button class="circle" data-rail="1" aria-label="Вперёд"><svg><use href="#i-arrow"/></svg></button></div>
+    </header>
+    <p class="sec__note">Персонажи, которых мастер вязала по просьбам. Похожего можно заказать от 1 500 ₽.</p>
+  </div>
+  <div class="rail" id="rail"></div>
+</section>
+
+<!-- КАК ЗАКАЗАТЬ -->
+<section class="sec" id="how">
+  <div class="wrap">
+    <header class="sec__head"><span class="idx">03</span><h2>Как заказать</h2></header>
+    <ol class="steps">
+      <li><span>01</span><h3>Выберите</h3><p>Работу из коллекции, её вариант в других цветах или своего персонажа.</p></li>
+      <li><span>02</span><h3>Заполните заявку</h3><p>Четыре коротких шага. Ориентир по цене виден сразу.</p></li>
+      <li><span>03</span><h3>Получите ответ</h3><p>Заявка с фото придёт мастеру в Telegram, ответ в удобный вам мессенджер.</p></li>
+      <li><span>04</span><h3>Встречайте</h3><p>От 3 дней для малышей до 2–3 недель для больших работ.</p></li>
+    </ol>
+    <div class="fit">
+      <div><h3>Мастер вяжет</h3><ul id="fitYes"></ul></div>
+      <div><h3>Не берёт в работу</h3><ul id="fitNo" class="is-no"></ul></div>
     </div>
   </div>
 </section>
 
-<!-- ================= ЗАЯВКА ================= -->
-<section class="section order" id="order">
-  <div class="order__bg" aria-hidden="true"></div>
-  <header class="section__head">
-    <p class="eyebrow">схема заказа</p>
-    <h2>Свяжем твою игрушку</h2>
-    <p class="section__sub">Четыре ряда, и заявка улетит мастеру прямо в Telegram. Чем точнее схема, тем быстрее и честнее ответ по цене.</p>
-  </header>
-
-  <!-- Прогресс: клубок разматывается в шарф -->
-  <div class="loom" aria-hidden="true">
-    <svg class="loom__ball" id="loomBall" viewBox="0 0 64 64" style="color:#c46a5a"><use href="#i-yarn"/></svg>
-    <div class="loom__scarf">
-      <div class="loom__knit" id="loomKnit"></div>
-      <ol class="loom__labels">
-        <li data-for="1">Что вяжем</li><li data-for="2">Как выглядит</li><li data-for="3">Размер и цена</li><li data-for="4">Связь</li>
+<!-- ЗАЯВКА -->
+<section class="order" id="order">
+  <picture class="order__bg" aria-hidden="true">
+    <source media="(max-width: 760px)" srcset="assets/img/moss-dark-900.jpg">
+    <img src="assets/img/moss-dark-1920.jpg" alt="" loading="lazy" decoding="async">
+  </picture>
+  <div class="order__wrap wrap">
+    <aside class="order__aside">
+      <span class="idx idx--light">04</span>
+      <h2>Заказать игрушку</h2>
+      <p class="order__lead">Четыре шага, и заявка со всеми деталями придёт мастеру в Telegram.</p>
+      <ol class="thread" id="thread" aria-hidden="true">
+        <li data-step="1"><i></i><span>Что вяжем</span></li>
+        <li data-step="2"><i></i><span>Как выглядит</span></li>
+        <li data-step="3"><i></i><span>Размер и цена</span></li>
+        <li data-step="4"><i></i><span>Контакты</span></li>
       </ol>
-    </div>
-  </div>
+      <div class="woven" id="woven" aria-label="Сводка заявки">
+        <p class="woven__brand">Korka</p>
+        <p class="woven__cap">ярлык заказа</p>
+        <dl id="wovenList"></dl>
+        <div class="woven__price"><span>Ориентир</span><b id="wovenPrice">—</b></div>
+      </div>
+    </aside>
 
-  <div class="order__layout">
-    <form class="pattern" id="orderForm" novalidate autocomplete="on">
-      <span class="tape tape--l" aria-hidden="true"></span><span class="tape tape--r" aria-hidden="true"></span>
+    <form class="sheet" id="orderForm" novalidate>
       <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="sheet__top">
+        <span class="sheet__count" id="stepCount">Шаг 1 из 4</span>
+        <div class="sheet__bar" aria-hidden="true"><i id="barFill"></i></div>
+      </div>
 
-      <!-- РЯД 1 -->
-      <fieldset class="row is-active" data-step="1">
-        <legend><span class="row__n">Ряд 1</span> Что вяжем?</legend>
-
-        <div class="choices choices--3" role="radiogroup" aria-label="Тип заказа">
-          <label class="choice">
-            <input type="radio" name="kind" value="catalog">
-            <span class="choice__body"><svg class="choice__ico" style="color:#7f9a4a"><use href="#i-yarn"/></svg>
-              <b>Как в каталоге</b><small>точный повтор игрушки</small></span>
-          </label>
-          <label class="choice">
-            <input type="radio" name="kind" value="remix">
-            <span class="choice__body"><svg class="choice__ico" style="color:#c99a63"><use href="#i-yarn"/></svg>
-              <b>Как в каталоге, но…</b><small>другие цвета или детали</small></span>
-          </label>
-          <label class="choice">
-            <input type="radio" name="kind" value="custom">
-            <span class="choice__body"><svg class="choice__ico" style="color:#c46a5a"><use href="#i-yarn"/></svg>
-              <b>Свой персонаж</b><small>по твоему референсу</small></span>
-          </label>
+      <!-- ШАГ 1 -->
+      <fieldset class="step is-active" data-step="1">
+        <legend>Что вяжем?</legend>
+        <div class="tiles" role="radiogroup" aria-label="Тип заказа">
+          <label class="tile"><input type="radio" name="kind" value="catalog">
+            <span class="tile__img"><img src="photos_by_category/07_animals_and_custom/03_plush_fox_lisichka/plush_fox_lisichka_01.jpg" alt="" loading="lazy"></span>
+            <span class="tile__txt"><b>Повтор из коллекции</b><small>точно такую же работу</small></span><span class="tile__tick"><svg><use href="#i-check"/></svg></span></label>
+          <label class="tile"><input type="radio" name="kind" value="remix">
+            <span class="tile__img"><img src="photos_by_category/01_ktulhucats/05_white_blue/ktulhucat_white_blue_01.jpg" alt="" loading="lazy"></span>
+            <span class="tile__txt"><b>С изменениями</b><small>другие цвета или детали</small></span><span class="tile__tick"><svg><use href="#i-check"/></svg></span></label>
+          <label class="tile"><input type="radio" name="kind" value="custom">
+            <span class="tile__img"><img src="assets/img/knit-stack-800.jpg" alt="" loading="lazy"></span>
+            <span class="tile__txt"><b>Свой персонаж</b><small>по вашему референсу</small></span><span class="tile__tick"><svg><use href="#i-check"/></svg></span></label>
         </div>
 
         <div class="reveal" data-show="catalog remix">
-          <label class="field">
-            <span class="field__label">Какую игрушку берём за основу?</span>
-            <input type="search" id="pickerSearch" placeholder="Найти: Поро, Аппа, лисичка…" autocomplete="off">
-          </label>
-          <div class="picker" id="picker" role="listbox" aria-label="Игрушки из каталога"></div>
+          <div class="field">
+            <label class="field__label" for="pickerSearch">Работа из коллекции</label>
+            <input type="search" id="pickerSearch" placeholder="Поиск: Поро, Аппа, лисичка" autocomplete="off">
+          </div>
+          <div class="picker" id="picker" role="listbox" aria-label="Работы из коллекции"></div>
           <input type="hidden" name="productId" id="productId">
         </div>
-
         <div class="reveal" data-show="remix">
-          <label class="field">
-            <span class="field__label">Что поменять?</span>
-            <textarea name="changes" rows="2" placeholder="Например: сделать в бело-голубых цветах, без пирсинга"></textarea>
-          </label>
+          <div class="field"><label class="field__label" for="f-changes">Что изменить</label>
+            <textarea id="f-changes" name="changes" rows="2" placeholder="Например: в бело-голубых цветах, без пирсинга"></textarea></div>
         </div>
-
         <div class="reveal" data-show="custom">
-          <p class="field__label">Кто это?</p>
-          <div class="kinds" id="creatureKinds"></div>
-          <div class="soft-stop" id="softStop" hidden role="alert"></div>
-          <label class="field">
-            <span class="field__label">Как зовут персонажа и откуда он?</span>
-            <input type="text" name="character" placeholder="Например: Тоторо из «Мой сосед Тоторо»">
-          </label>
+          <p class="field__label">Кто это</p>
+          <div class="pills" id="creatureKinds"></div>
+          <div class="notice" id="softStop" hidden role="alert"></div>
+          <div class="field"><label class="field__label" for="f-character">Имя персонажа и откуда он</label>
+            <input id="f-character" type="text" name="character" placeholder="Например: Тоторо, «Мой сосед Тоторо»"></div>
         </div>
-        <p class="row__err" aria-live="polite"></p>
+        <p class="step__err" aria-live="polite"></p>
       </fieldset>
 
-      <!-- РЯД 2 -->
-      <fieldset class="row" data-step="2">
-        <legend><span class="row__n">Ряд 2</span> Как он выглядит?</legend>
-
+      <!-- ШАГ 2 -->
+      <fieldset class="step" data-step="2">
+        <legend>Как он выглядит?</legend>
         <div class="chosen" id="chosenProduct" hidden></div>
+        <div class="reveal" data-show="catalog"><p class="muted">Мастер свяжет такую же работу, как на фото. Пожелания можно оставить на последнем шаге.</p></div>
 
-        <div class="reveal" data-show="catalog">
-          <p class="catalog-note">Свяжу такую же, как на фото 🧶 Если есть пожелания, напиши их на последнем шаге.</p>
-        </div>
-
-        <div class="refs reveal" id="refsBlock" data-show="remix custom">
-          <p class="field__label"><span id="refsTitle">Референсы</span> <small id="refsHint">картинки персонажа, до 5 штук</small></p>
-          <div class="clothesline" id="clothesline" aria-live="polite"></div>
-          <label class="basket" id="basket" tabindex="0">
+        <div class="reveal" id="refsBlock" data-show="remix custom">
+          <p class="field__label"><span id="refsTitle">Референсы</span> <small id="refsHint">до 5 изображений</small></p>
+          <label class="drop" id="drop" tabindex="0">
             <input type="file" id="refInput" accept="image/*" multiple hidden>
-            <span class="basket__weave" aria-hidden="true"></span>
-            <span class="basket__text"><b>Брось фото в корзинку</b><small>или нажми, чтобы выбрать</small></span>
+            <svg><use href="#i-upload"/></svg>
+            <span><b>Перетащите изображения</b> или нажмите, чтобы выбрать</span>
           </label>
-          <label class="field">
-            <span class="field__label">…или ссылка на картинку / пост</span>
-            <input type="url" name="refLink" placeholder="https://">
-          </label>
-        </div>
+          <div class="thumbs" id="thumbs" aria-live="polite"></div>
+          <div class="field"><label class="field__label" for="f-link">Или ссылка на изображение</label>
+            <input id="f-link" type="url" name="refLink" placeholder="https://"></div>
 
-        <div class="reveal" data-show="remix custom">
-          <p class="field__label">Цвета пряжи <small>можно несколько</small></p>
-          <div class="palette" id="palette"></div>
-          <label class="field">
-            <span class="field__label">Пожелания по цветам и деталям</span>
-            <input type="text" name="colorNote" placeholder="Например: тёмно-зелёный, глазки поблёскивают">
-          </label>
+          <p class="field__label">Пряжа <small id="colorsPicked">можно выбрать несколько</small></p>
+          <div class="swatches" id="swatches"></div>
+          <div class="field"><label class="field__label" for="f-colornote">Пожелания по цвету и деталям</label>
+            <input id="f-colornote" type="text" name="colorNote" placeholder="Например: глубокий зелёный, глаза с блеском"></div>
         </div>
-        <p class="row__err" aria-live="polite"></p>
+        <p class="step__err" aria-live="polite"></p>
       </fieldset>
 
-      <!-- РЯД 3 -->
-      <fieldset class="row" data-step="3">
-        <legend><span class="row__n">Ряд 3</span> Размер и цена</legend>
-
+      <!-- ШАГ 3 -->
+      <fieldset class="step" data-step="3">
+        <legend>Размер и цена</legend>
         <div class="reveal" data-show="remix custom">
-          <p class="field__label">Какого размера?</p>
-          <div class="sizes" id="sizes"></div>
+          <p class="field__label">Размер</p>
+          <div class="scale" id="sizes"></div>
         </div>
-
-        <div class="pricetag" id="pricetag">
-          <span class="pricetag__hole" aria-hidden="true"></span>
-          <span class="pricetag__label">ориентир по цене</span>
-          <b class="pricetag__value" id="priceValue">выбери размер</b>
-          <small class="pricetag__eg" id="priceEg">цены взяты из каталога; точную стоимость мастер назовёт после просмотра</small>
+        <div class="estimate" id="estimate">
+          <span>Ориентир стоимости</span>
+          <b id="priceValue">—</b>
+          <small id="priceEg">Цены по коллекции. Точную стоимость мастер назовёт после просмотра заявки.</small>
         </div>
-
         <div class="reveal" data-show="remix custom">
-          <p class="field__label">Сколько готов(а) потратить?</p>
-          <div class="budgets" id="budgets"></div>
-          <p class="budget-warn" id="budgetWarn" hidden></p>
+          <p class="field__label">Ваш бюджет</p>
+          <div class="pills" id="budgets"></div>
+          <p class="notice notice--soft" id="budgetWarn" hidden></p>
         </div>
-
-        <div class="when">
-          <label class="field">
-            <span class="field__label">Нужна к дате?</span>
-            <input type="date" name="deadline" id="deadline">
-          </label>
-          <label class="check"><input type="checkbox" name="noRush" id="noRush"><span class="check__box"></span>Не спешу, можно как получится</label>
+        <div class="row2">
+          <div class="field"><label class="field__label" for="deadline">Нужна к дате</label><input type="date" name="deadline" id="deadline"></div>
+          <label class="check"><input type="checkbox" name="noRush" id="noRush"><span class="check__box"><svg><use href="#i-check"/></svg></span>Срок не важен</label>
         </div>
-        <p class="row__err" aria-live="polite"></p>
+        <p class="step__err" aria-live="polite"></p>
       </fieldset>
 
-      <!-- РЯД 4 -->
-      <fieldset class="row" data-step="4">
-        <legend><span class="row__n">Ряд 4</span> Как с тобой связаться?</legend>
-
-        <label class="field">
-          <span class="field__label">Как тебя зовут?</span>
-          <input type="text" name="name" autocomplete="name" placeholder="Имя">
-        </label>
-
-        <p class="field__label">Где удобнее ответить?</p>
-        <div class="labels-sewn" role="radiogroup" aria-label="Способ связи">
+      <!-- ШАГ 4 -->
+      <fieldset class="step" data-step="4">
+        <legend>Контакты</legend>
+        <div class="field"><label class="field__label" for="f-name">Имя</label><input id="f-name" type="text" name="name" autocomplete="name" placeholder="Как к вам обращаться"></div>
+        <p class="field__label">Где ответить</p>
+        <div class="seg" role="radiogroup" aria-label="Способ связи">
           <label><input type="radio" name="contactType" value="tg" checked><span>Telegram</span></label>
           <label><input type="radio" name="contactType" value="vk"><span>ВКонтакте</span></label>
           <label><input type="radio" name="contactType" value="phone"><span>Телефон</span></label>
           <label><input type="radio" name="contactType" value="email"><span>Почта</span></label>
         </div>
-        <label class="field">
-          <span class="field__label" id="contactLabel">Ник в Telegram</span>
-          <input type="text" name="contact" id="contact" placeholder="@username" autocomplete="off">
-        </label>
-
-        <label class="field">
-          <span class="field__label">Город для доставки</span>
-          <input type="text" name="city" autocomplete="address-level2" placeholder="Например: Казань">
-        </label>
-        <label class="field">
-          <span class="field__label">Что ещё важно знать?</span>
-          <textarea name="comment" rows="2" placeholder="Подарок, повод, любые детали"></textarea>
-        </label>
-
-        <label class="check check--honest"><input type="checkbox" name="honest" id="honest"><span class="check__box"></span>Я пишу по поводу игрушки 🧶 <small>(знакомиться — не сюда 🙃)</small></label>
-        <p class="row__err" aria-live="polite"></p>
+        <div class="field"><label class="field__label" for="contact" id="contactLabel">Ник в Telegram</label><input type="text" name="contact" id="contact" placeholder="@username" autocomplete="off"></div>
+        <div class="row2">
+          <div class="field"><label class="field__label" for="f-city">Город доставки</label><input id="f-city" type="text" name="city" autocomplete="address-level2" placeholder="Город"></div>
+          <div class="field"><label class="field__label" for="f-comment">Комментарий</label><input id="f-comment" type="text" name="comment" placeholder="Повод, пожелания"></div>
+        </div>
+        <div class="review" id="review"></div>
+        <label class="check"><input type="checkbox" name="honest" id="honest"><span class="check__box"><svg><use href="#i-check"/></svg></span>Я обращаюсь по поводу заказа игрушки</label>
+        <p class="step__err" aria-live="polite"></p>
       </fieldset>
 
-      <!-- ГОТОВО -->
       <div class="done" id="done" hidden>
-        <svg class="done__ball" viewBox="0 0 64 64" style="color:#7f9a4a"><use href="#i-yarn"/></svg>
-        <h3>Узелок завязан!</h3>
-        <p id="doneText">Заявка улетела мастеру в Telegram.</p>
-        <button type="button" class="btn btn--ghost" id="again">Связать ещё одну</button>
+        <svg class="done__mark"><use href="#i-stitch"/></svg>
+        <p class="kicker kicker--dark" id="doneId"></p>
+        <h3>Заявка принята</h3>
+        <p id="doneText">Мастер посмотрит детали и ответит вам.</p>
+        <button type="button" class="btn btn--ghost" id="again">Новая заявка</button>
       </div>
 
-      <div class="pattern__nav" id="patternNav">
-        <button type="button" class="btn btn--ghost" id="prevBtn" hidden>← Назад</button>
-        <button type="button" class="btn btn--moss" id="nextBtn">Дальше <span aria-hidden="true">→</span></button>
-        <button type="submit" class="btn btn--sew" id="sendBtn" hidden><svg class="sew-ico"><use href="#i-button"/></svg><span>Завязать узелок и отправить</span></button>
+      <div class="sheet__nav" id="sheetNav">
+        <button type="button" class="link" id="prevBtn" hidden><svg><use href="#i-back"/></svg>Назад</button>
+        <button type="button" class="btn btn--moss" id="nextBtn">Далее <svg><use href="#i-arrow"/></svg></button>
+        <button type="submit" class="btn btn--moss" id="sendBtn" hidden><span>Отправить заявку</span><svg><use href="#i-arrow"/></svg></button>
       </div>
     </form>
-
-    <!-- Живая бирка -->
-    <aside class="label-tag" id="labelTag" aria-label="Твоя заявка">
-      <span class="label-tag__string" aria-hidden="true"></span>
-      <span class="label-tag__hole" aria-hidden="true"></span>
-      <p class="label-tag__brand">made by korka</p>
-      <p class="label-tag__title">Бирка заказа</p>
-      <dl class="label-tag__list" id="tagList"></dl>
-      <p class="label-tag__price"><span>ориентир</span><b id="tagPrice">—</b></p>
-      <p class="label-tag__stamp" aria-hidden="true">ручная<br>работа</p>
-    </aside>
   </div>
 </section>
 
-<!-- ================= FAQ ================= -->
-<section class="section faq" id="faq">
-  <header class="section__head">
-    <p class="eyebrow">частые вопросы</p>
-    <h2>Вопросы</h2>
-  </header>
-  <div class="faq__list">
-    <details><summary>Сколько стоит игрушка?</summary><p>Ориентир по каталогу: малыши и подвески 1 200–1 900 ₽, обнимашки 2 200–4 500 ₽, крупные и сложные 5 000–10 000 ₽, метровые гиганты 7 000–7 500 ₽. Точную цену своего персонажа узнаешь после заявки с референсом.</p></details>
-    <details><summary>Сколько ждать?</summary><p>От 3–5 дней для малышей до 2–3 недель для больших игрушек вроде Гриффона. Если игрушка есть в наличии, она готова к отправке.</p></details>
-    <details><summary>Можно повторить игрушку из каталога?</summary><p>Да, почти всё в каталоге вяжется под заказ. Можно поменять цвета: выбери в форме «Как в каталоге, но…».</p></details>
-    <details><summary>Из чего вяжутся игрушки?</summary><p>Зависит от игрушки: шерсть с акрилом, плюшевая и «травка»-пряжа, микрополиэстер. Набивка: синтешар, синтепух или холлофайбер. Состав указан в карточке каждой игрушки.</p></details>
-    <details><summary>Почему форма спрашивает референс и бюджет?</summary><p>Так я сразу понимаю, смогу ли связать персонажа и во сколько он обойдётся. Без долгой переписки «а что вы хотите?».</p></details>
+<!-- FAQ -->
+<section class="sec" id="faq">
+  <div class="wrap wrap--narrow">
+    <header class="sec__head"><span class="idx">05</span><h2>Вопросы</h2></header>
+    <div class="faq">
+      <details><summary>Сколько стоит игрушка?<svg><use href="#i-plus"/></svg></summary><p>Ориентир по коллекции: малыши и подвески 1 200–1 900 ₽, средние игрушки 2 200–4 500 ₽, крупные и сложные 5 000–10 000 ₽, метровые 7 000–7 500 ₽. Точную цену своего персонажа мастер назовёт после заявки с референсом.</p></details>
+      <details><summary>Сколько ждать?<svg><use href="#i-plus"/></svg></summary><p>От 3–5 дней для небольших работ до 2–3 недель для крупных, например Гриффона. Работы в наличии готовы к отправке.</p></details>
+      <details><summary>Можно повторить игрушку из коллекции?<svg><use href="#i-plus"/></svg></summary><p>Да, почти все работы вяжутся повторно. Цвета можно изменить: выберите в заявке «С изменениями».</p></details>
+      <details><summary>Из чего сделаны игрушки?<svg><use href="#i-plus"/></svg></summary><p>Шерсть с акрилом, плюшевая и «травка»-пряжа, микрополиэстер. Наполнитель: синтешар, синтепух или холлофайбер. Состав указан в карточке каждой работы.</p></details>
+      <details><summary>Зачем в заявке референс и бюджет?<svg><use href="#i-plus"/></svg></summary><p>Так мастер сразу понимает, сможет ли связать персонажа и во что он обойдётся, без долгой переписки.</p></details>
+    </div>
   </div>
 </section>
 </main>
 
-<!-- ================= Подвал ================= -->
-<footer class="footer">
-  <div class="fireflies" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-  <div class="footer__inner">
-    <a class="logo logo--light" href="#top"><svg class="logo__ball"><use href="#i-yarn"/></svg><span class="logo__text">made by <b>korka</b></span></a>
-    <p>Вязаные игрушки ручной работы. Каждая связана с любовью и немножко мхом 🌿</p>
-    <div class="footer__links">
-      <a class="btn btn--tg" id="channelLink" href="https://t.me/madebykorka" target="_blank" rel="noopener"><svg><use href="#i-tg"/></svg>Канал в Telegram</a>
-      <a class="btn btn--ghost-light" id="dmLink" href="https://t.me/slldnls" target="_blank" rel="noopener">Написать мастеру</a>
+<footer class="ftr">
+  <div class="wrap ftr__inner">
+    <div class="ftr__brand">
+      <a class="brand brand--light" href="#top"><svg class="brand__mark"><use href="#i-stitch"/></svg><span class="brand__name">Korka</span></a>
+      <p>Вязаное ателье игрушек ручной работы.</p>
     </div>
-    <p class="footer__copy">© <span id="year"></span> made by korka</p>
+    <div class="ftr__links">
+      <a id="channelLink" href="https://t.me/madebykorka" target="_blank" rel="noopener"><svg><use href="#i-tg"/></svg>Канал в Telegram</a>
+      <a id="dmLink" href="https://t.me/slldnls" target="_blank" rel="noopener"><svg><use href="#i-arrow"/></svg>Написать мастеру</a>
+    </div>
+    <p class="ftr__copy">© <span id="year">2026</span> Korka. Фото мха: Unsplash.</p>
   </div>
 </footer>
 
-<a class="fab" href="#order" aria-label="Оставить заявку"><svg><use href="#i-button"/></svg></a>
+<a class="fab" href="#order" id="fab">Заказать</a>
 
-<!-- ================= Лайтбокс ================= -->
-<div class="modal" id="modal" hidden>
-  <div class="modal__backdrop" data-close></div>
-  <article class="modal__card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <button class="modal__close" data-close aria-label="Закрыть">×</button>
-    <div class="modal__gallery">
-      <div class="modal__main" id="modalMain"></div>
-      <div class="modal__thumbs" id="modalThumbs"></div>
+<!-- Карточка работы -->
+<div class="sheet-modal" id="modal" hidden>
+  <div class="sheet-modal__backdrop" data-close></div>
+  <article class="pm" role="dialog" aria-modal="true" aria-labelledby="pmTitle">
+    <button class="pm__close circle" data-close aria-label="Закрыть"><svg><use href="#i-close"/></svg></button>
+    <div class="pm__gallery">
+      <div class="pm__track" id="pmTrack"></div>
+      <span class="pm__count" id="pmCount"></span>
     </div>
-    <div class="modal__info">
-      <p class="eyebrow" id="modalCat"></p>
-      <h3 id="modalTitle"></h3>
-      <p class="modal__desc" id="modalDesc"></p>
-      <dl class="modal__specs" id="modalSpecs"></dl>
-      <div class="modal__actions">
-        <button class="btn btn--moss" id="modalOrder">Хочу такого</button>
-        <a class="btn btn--ghost" id="modalPost" target="_blank" rel="noopener">Пост в канале</a>
+    <div class="pm__info">
+      <p class="kicker kicker--dark" id="pmCat"></p>
+      <h3 id="pmTitle"></h3>
+      <p class="pm__price" id="pmPrice"></p>
+      <dl class="pm__specs" id="pmSpecs"></dl>
+      <p class="pm__desc" id="pmDesc"></p>
+      <div class="pm__actions">
+        <button class="btn btn--moss" id="pmOrder">Заказать такую <svg><use href="#i-arrow"/></svg></button>
+        <a class="link" id="pmPost" target="_blank" rel="noopener">Пост в канале <svg><use href="#i-arrow"/></svg></a>
       </div>
     </div>
   </article>
 </div>
 
-<!-- ================= Запасной путь отправки ================= -->
-<div class="modal" id="fallback" hidden>
-  <div class="modal__backdrop" data-close></div>
-  <article class="modal__card modal__card--narrow" role="dialog" aria-modal="true" aria-labelledby="fbTitle">
-    <button class="modal__close" data-close aria-label="Закрыть">×</button>
-    <h3 id="fbTitle">Почти готово!</h3>
-    <p id="fbText">Скопируй заявку и отправь мастеру в Telegram. Фото-референсы прикрепи прямо в чате.</p>
-    <textarea id="fbMessage" rows="10" readonly></textarea>
-    <div class="modal__actions">
-      <button class="btn btn--moss" id="fbCopy">Скопировать и открыть Telegram</button>
+<!-- Запасной путь -->
+<div class="sheet-modal" id="fallback" hidden>
+  <div class="sheet-modal__backdrop" data-close></div>
+  <article class="pm pm--narrow" role="dialog" aria-modal="true" aria-labelledby="fbTitle">
+    <button class="pm__close circle" data-close aria-label="Закрыть"><svg><use href="#i-close"/></svg></button>
+    <div class="pm__info">
+      <p class="kicker kicker--dark">Последний шаг</p>
+      <h3 id="fbTitle">Отправьте заявку мастеру</h3>
+      <p id="fbText"></p>
+      <textarea id="fbMessage" rows="9" readonly></textarea>
+      <div class="pm__actions"><button class="btn btn--moss" id="fbCopy">Скопировать и открыть Telegram</button></div>
     </div>
   </article>
 </div>

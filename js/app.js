@@ -1,225 +1,218 @@
-/* made by korka — каталог, галерея, навигация */
+/* Korka — коллекция, карточка работы, навигация */
 (function () {
   "use strict";
   const CFG = window.KORKA_CONFIG || {};
   const CATALOG = window.KORKA_CATALOG || [];
   const CATS = window.KORKA_CATEGORIES || {};
+  const PORTFOLIO = "08_portfolio_orders";
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
-  const PORTFOLIO = "08_portfolio_orders";
-
-  const fmt = (n) => n == null ? "" : n.toLocaleString("ru-RU").replace(/\u00a0/g, " ") + " ₽";
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const fmt = (n) => (n == null ? "" : Number(n).toLocaleString("ru-RU").replace(/\u00a0/g, " ") + " ₽");
+  const mobile = () => window.matchMedia("(max-width: 760px)").matches;
 
-  /* ---------- Фото: локальный файл → CDN Telegram → вязаная заглушка ---------- */
-  function placeholder(file, path) {
-    const d = document.createElement("div");
-    d.className = "ph";
-    d.title = path || file || "";
-    d.innerHTML = '<svg viewBox="0 0 64 64"><use href="#i-yarn"/></svg><small>сюда фото</small><code>' + esc(file || "photo.jpg") + "</code>";
-    return d;
-  }
+  /* Фото: локальный файл → копия в Telegram → элемент убирается (никаких заглушек) */
   function photo(p, alt, opts = {}) {
-    if (!p) return placeholder("", "");
     const img = new Image();
     img.alt = alt || "";
-    img.loading = opts.eager ? "eager" : "lazy";
     img.decoding = "async";
+    if (!opts.eager) img.loading = "lazy";
+    if (opts.className) img.className = opts.className;
     let triedCdn = false;
     img.onerror = () => {
-      if (!triedCdn && CFG.useTelegramCdnFallback && p.cdn) { triedCdn = true; img.src = p.cdn; return; }
-      img.replaceWith(placeholder(p.file, p.path));
+      if (!triedCdn && CFG.useTelegramCdnFallback !== false && p && p.cdn) { triedCdn = true; img.src = p.cdn; return; }
+      if (opts.onFail) opts.onFail(img); else img.remove();
     };
-    img.src = p.path;
+    if (p) img.src = p.path; else img.onerror();
     return img;
   }
-  window.KorkaPhoto = { photo, placeholder };
-
-  const findByPath = (path) => {
-    for (const it of CATALOG) for (const ph of it.photos) if (ph.path === path) return ph;
-    return { path, file: path.split("/").pop() };
-  };
-
-  /* ---------- hero: полароиды ---------- */
-  $$(".polaroid[data-photo]").forEach((fig) => {
-    const p = findByPath(fig.dataset.photo);
-    fig.prepend(photo(p, fig.textContent.trim(), { eager: true }));
-  });
+  window.KorkaPhoto = { photo };
 
   const shop = CATALOG.filter((x) => x.cat !== PORTFOLIO);
-  const statCount = $('[data-stat="count"]');
-  if (statCount) statCount.textContent = shop.length;
-  const minPrice = Math.min(...shop.map((x) => x.price).filter(Boolean));
-  const statMin = $('[data-stat="min"]');
-  if (statMin && isFinite(minPrice)) statMin.textContent = fmt(minPrice);
+  const inStock = (x) => /^в наличии/i.test(x.status || "");
 
-  /* ---------- фильтры-катушки ---------- */
-  const spoolColors = {
-    all: "#8aa65a", "01_ktulhucats": "#6a9b7e", "02_avatar_fandom": "#6a9bc4", "03_pokemon": "#e2b257",
-    "04_games_and_cartoons": "#9a7bc4", "05_mythical_creatures": "#c46a5a", "06_plush_giants_1_meter": "#4f6b33", "07_animals_and_custom": "#d4a373"
-  };
-  const state = { cat: "all", stock: false, sort: "new" };
-  const spools = $("#spools");
+  /* ---------- hero ---------- */
+  const heroItem = shop.find((x) => x.photos.some((p) => /ktulhucat_green_purple_01/.test(p.file)));
+  if (heroItem) {
+    $("#heroName").textContent = heroItem.title.replace(/\s*\(.*\)\s*/, "");
+    $("#heroMeta").textContent = heroItem.priceText || fmt(heroItem.price);
+    $("#heroFeature").addEventListener("click", () => openItem(heroItem));
+    $("#heroFeature").style.cursor = "pointer";
+  }
+  const stat = (k, v) => { const el = $('[data-stat="' + k + '"]'); if (el) el.textContent = v; };
+  stat("count", shop.length);
+  const min = Math.min(...shop.map((x) => x.price).filter(Boolean));
+  if (isFinite(min)) stat("min", fmt(min));
+
+  /* ---------- коллекция ---------- */
+  const state = { cat: "all", stock: false, sort: "new", shown: 0 };
+  const PAGE = () => (mobile() ? 8 : 12);
+  const tabs = $("#tabs"), grid = $("#grid"), more = $("#moreBtn");
   const counts = shop.reduce((a, x) => ((a[x.cat] = (a[x.cat] || 0) + 1), a), {});
-  const catKeys = ["all", ...Object.keys(CATS).filter((k) => k !== PORTFOLIO && counts[k])];
-  catKeys.forEach((k) => {
+  ["all", ...Object.keys(CATS).filter((k) => k !== PORTFOLIO && counts[k])].forEach((k) => {
     const b = document.createElement("button");
     b.type = "button";
-    b.className = "spool";
-    b.style.setProperty("--c", spoolColors[k] || "#8aa65a");
-    b.setAttribute("aria-pressed", k === "all");
-    b.dataset.cat = k;
-    b.innerHTML = '<span class="spool__ico"></span>' + (k === "all" ? "Все" : esc(CATS[k])) + " <small>" + (k === "all" ? shop.length : counts[k]) + "</small>";
+    b.className = "tab";
+    b.setAttribute("role", "tab");
+    b.setAttribute("aria-selected", k === "all");
+    b.innerHTML = esc(k === "all" ? "Все работы" : CATS[k]) + "<sup>" + (k === "all" ? shop.length : counts[k]) + "</sup>";
     b.addEventListener("click", () => {
       state.cat = k;
-      $$(".spool", spools).forEach((s) => s.setAttribute("aria-pressed", s === b));
-      render();
+      $$(".tab", tabs).forEach((t) => t.setAttribute("aria-selected", t === b));
+      b.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
+      render(true);
     });
-    spools.appendChild(b);
+    tabs.appendChild(b);
   });
-  $("#onlyStock").addEventListener("change", (e) => { state.stock = e.target.checked; render(); });
-  $("#sortBy").addEventListener("change", (e) => { state.sort = e.target.value; render(); });
+  $("#onlyStock").addEventListener("change", (e) => { state.stock = e.target.checked; render(true); });
+  $("#sortBy").addEventListener("change", (e) => { state.sort = e.target.value; render(true); });
 
-  /* ---------- карточки ---------- */
-  const grid = $("#grid");
-  function card(it, i) {
+  function list() {
+    const l = shop.filter((x) => (state.cat === "all" || x.cat === state.cat) && (!state.stock || inStock(x)));
+    if (state.sort === "cheap") l.sort((a, b) => a.price - b.price);
+    else if (state.sort === "expensive") l.sort((a, b) => b.price - a.price);
+    else l.sort((a, b) => (b.date || "").localeCompare(a.date || ""));
+    return l;
+  }
+  function card(it) {
     const a = document.createElement("article");
-    a.className = "card";
-    a.style.animationDelay = Math.min(i * 40, 500) + "ms";
-    a.tabIndex = 0;
-    a.setAttribute("aria-label", it.title);
-    const inStock = /наличи/i.test(it.status);
-    const ph = document.createElement("div");
-    ph.className = "card__photo";
-    ph.appendChild(photo(it.photos[0], it.title));
-    ph.insertAdjacentHTML("beforeend",
-      '<span class="badge ' + (inStock ? "" : "badge--order") + '">' + (inStock ? "в наличии" : "под заказ") + "</span>" +
-      (it.photos.length > 1 ? '<span class="card__count">📷 ' + it.photos.length + "</span>" : ""));
-    a.appendChild(ph);
+    a.className = "item";
+    const media = document.createElement("a");
+    media.className = "item__media";
+    media.href = "#catalog";
+    media.setAttribute("aria-label", it.title);
+    media.appendChild(photo(it.photos[0], it.title, { onFail: () => a.remove() }));
+    if (it.photos[1] && window.matchMedia("(hover: hover)").matches) {
+      a.addEventListener("mouseenter", () => {
+        if (a.dataset.alt) return;
+        a.dataset.alt = 1;
+        const alt = photo(it.photos[1], "", { className: "item__alt", eager: true });
+        alt.addEventListener("load", () => alt.classList.add("is-ready"));
+        media.appendChild(alt);
+      }, { once: true });
+    }
+    if (inStock(it)) media.insertAdjacentHTML("beforeend", '<span class="item__badge">В наличии</span>');
+    a.appendChild(media);
     a.insertAdjacentHTML("beforeend",
-      '<div class="card__body">' +
-        '<span class="card__cat">' + esc(CATS[it.cat] || it.category) + "</span>" +
-        '<h3 class="card__title">' + esc(it.title) + "</h3>" +
-        '<span class="card__meta">⏳ ' + esc(it.lead || "") + "</span>" +
-        '<div class="card__foot"><span class="price-tag">' + esc(it.priceText || fmt(it.price)) + "</span>" +
-        '<button type="button" class="want" data-want="' + esc(it.id) + '">Хочу такого</button></div>' +
-      "</div>");
+      '<button type="button" class="item__add" aria-label="Заказать такую" data-want="' + esc(it.id) + '"><svg><use href="#i-plus"/></svg></button>' +
+      '<div class="item__info"><p class="item__cat">' + esc(CATS[it.cat] || it.category) + '</p><h3 class="item__title">' + esc(it.title) + '</h3><p class="item__price">' + esc(it.priceText || fmt(it.price)) + "</p></div>");
     a.addEventListener("click", (e) => {
-      if (e.target.closest("[data-want]")) return;
-      openModal(it);
+      e.preventDefault();
+      if (e.target.closest("[data-want]")) { wantThis(it.id); return; }
+      openItem(it);
     });
-    a.addEventListener("keydown", (e) => { if (e.key === "Enter") openModal(it); });
     return a;
   }
-  function render() {
-    let list = shop.filter((x) => (state.cat === "all" || x.cat === state.cat) && (!state.stock || /наличи/i.test(x.status)));
-    if (state.sort === "cheap") list.sort((a, b) => a.price - b.price);
-    else if (state.sort === "expensive") list.sort((a, b) => b.price - a.price);
-    else list.sort((a, b) => (b.date || "").localeCompare(a.date || ""));
-    grid.innerHTML = "";
-    list.forEach((it, i) => grid.appendChild(card(it, i)));
-    $("#empty").hidden = list.length > 0;
+  function render(reset) {
+    const l = list();
+    if (reset) { grid.innerHTML = ""; state.shown = 0; }
+    const next = l.slice(state.shown, state.shown + PAGE());
+    const frag = document.createDocumentFragment();
+    next.forEach((it) => frag.appendChild(card(it)));
+    grid.appendChild(frag);
+    state.shown += next.length;
+    $("#empty").hidden = l.length > 0;
+    const left = l.length - state.shown;
+    more.hidden = left <= 0;
+    more.textContent = "Показать ещё " + left;
   }
-  render();
+  more.addEventListener("click", () => render(false));
+  render(true);
 
-  grid.addEventListener("click", (e) => {
-    const b = e.target.closest("[data-want]");
-    if (b) wantThis(b.dataset.want);
-  });
-
-  /* ---------- портфолио ---------- */
-  const board = $("#corkboard");
+  /* ---------- работы на заказ ---------- */
+  const rail = $("#rail");
   const port = CATALOG.find((x) => x.cat === PORTFOLIO);
-  if (port && board) {
+  if (port) {
     port.photos.forEach((p, i) => {
       const f = document.createElement("figure");
-      f.className = "polaroid";
-      f.style.animationDelay = -i * 0.7 + "s";
-      f.appendChild(photo(p, "Выполненный заказ " + (i + 1)));
-      f.insertAdjacentHTML("beforeend", "<figcaption>заказ №" + (i + 1) + "</figcaption>");
-      f.addEventListener("click", () => openModal(port, i));
-      board.appendChild(f);
+      const fr = document.createElement("div");
+      fr.className = "frame";
+      fr.appendChild(photo(p, "Работа на заказ " + (i + 1), { onFail: () => f.remove() }));
+      f.appendChild(fr);
+      f.insertAdjacentHTML("beforeend", "<figcaption><span>Заказ " + String(i + 1).padStart(2, "0") + "</span><span>ручная работа</span></figcaption>");
+      f.addEventListener("click", () => openItem(port, i));
+      rail.appendChild(f);
     });
   }
+  $$("[data-rail]").forEach((b) => b.addEventListener("click", () => {
+    const step = (rail.firstElementChild ? rail.firstElementChild.getBoundingClientRect().width + 20 : 300) * 2;
+    rail.scrollBy({ left: step * +b.dataset.rail, behavior: "smooth" });
+  }));
 
-  /* ---------- что вяжу / не вяжу ---------- */
-  const yes = $("#fitYes"), no = $("#fitNo");
-  (CFG.onProfile || []).forEach((o) => yes.insertAdjacentHTML("beforeend", "<li>" + esc(o.label) + "<small>" + esc(o.hint || "") + "</small></li>"));
-  yes.insertAdjacentHTML("beforeend", "<li>Метровые гиганты<small>Несси, Чупакабрик и другие обнимашки</small></li>");
-  (CFG.offProfile || []).forEach((o) => no.insertAdjacentHTML("beforeend", "<li>" + esc(o.label) + "<small>" + esc(o.hint || "") + "</small></li>"));
+  /* ---------- вяжет / не берёт ---------- */
+  const li = (o, icon) => '<li><svg><use href="#' + icon + '"/></svg><b>' + esc(o.label) + "</b><small>" + esc(o.hint || "") + "</small></li>";
+  $("#fitYes").innerHTML = (CFG.onProfile || []).map((o) => li(o, "i-check")).join("") + li({ label: "Большие работы до метра", hint: "Несси, Чупакабрик и другие" }, "i-check");
+  $("#fitNo").innerHTML = (CFG.offProfile || []).map((o) => li(o, "i-minus")).join("");
 
-  /* ---------- модалка ---------- */
-  const modal = $("#modal");
-  let lastFocus = null, current = null;
-  function openModal(it, startIdx = 0) {
-    current = it;
+  /* ---------- карточка работы ---------- */
+  const modal = $("#modal"), track = $("#pmTrack"), count = $("#pmCount");
+  let lastFocus = null;
+  function openItem(it, start = 0) {
     lastFocus = document.activeElement;
-    $("#modalCat").textContent = CATS[it.cat] || it.category || "";
-    $("#modalTitle").textContent = it.title;
-    $("#modalDesc").textContent = it.desc || "";
-    const specs = [
-      ["Цена", it.priceText || fmt(it.price)], ["Статус", it.status], ["Срок", it.lead],
-      ["Материалы", it.materials], ["Цвета", (it.colors || []).join(", ")], ["Размер", it.dims]
-    ].filter(([, v]) => v);
-    $("#modalSpecs").innerHTML = specs.map(([k, v]) => "<dt>" + esc(k) + "</dt><dd>" + esc(v) + "</dd>").join("");
-    const main = $("#modalMain"), thumbs = $("#modalThumbs");
-    thumbs.innerHTML = "";
-    const show = (i) => {
-      main.innerHTML = "";
-      main.appendChild(photo(it.photos[i], it.title + " — фото " + (i + 1), { eager: true }));
-      $$("button", thumbs).forEach((b, j) => b.setAttribute("aria-current", i === j));
-    };
-    it.photos.forEach((p, i) => {
-      const b = document.createElement("button");
-      b.type = "button";
-      b.setAttribute("aria-label", "Фото " + (i + 1));
-      b.appendChild(photo(p, ""));
-      b.addEventListener("click", () => show(i));
-      thumbs.appendChild(b);
-    });
-    show(startIdx);
-    const post = $("#modalPost");
-    post.href = it.post || CFG.channelUrl;
-    const orderBtn = $("#modalOrder");
-    orderBtn.hidden = it.cat === PORTFOLIO;
-    orderBtn.onclick = () => { closeModal(); wantThis(it.id); };
+    const isPort = it.cat === PORTFOLIO;
+    $("#pmCat").textContent = CATS[it.cat] || it.category || "";
+    $("#pmTitle").textContent = isPort ? "Работы на заказ" : it.title;
+    $("#pmPrice").textContent = isPort ? "от 1 500 ₽" : it.priceText || fmt(it.price);
+    const specs = isPort ? [["Срок", it.lead]] : [["Наличие", it.status], ["Срок", it.lead], ["Материалы", it.materials], ["Цвета", (it.colors || []).join(", ")], ["Размер", it.dims]];
+    $("#pmSpecs").innerHTML = specs.filter(([, v]) => v).map(([k, v]) => "<div><dt>" + esc(k) + "</dt><dd>" + esc(v) + "</dd></div>").join("");
+    $("#pmDesc").textContent = it.desc || "";
+    const upd = () => { const n = track.children.length; const i = Math.round(track.scrollLeft / (track.clientWidth || 1)); count.textContent = n > 1 ? (Math.min(i, n - 1) + 1) + " / " + n : ""; count.hidden = n < 2; };
+    track.innerHTML = "";
+    it.photos.forEach((p, i) => track.appendChild(photo(p, it.title + ", фото " + (i + 1), { eager: i === start, onFail: (img) => { img.remove(); upd(); } })));
+    track.onscroll = () => requestAnimationFrame(upd);
+    $("#pmPost").href = it.post || CFG.channelUrl;
+    const ob = $("#pmOrder");
+    ob.innerHTML = (isPort ? "Заказать похожую" : "Заказать такую") + ' <svg><use href="#i-arrow"/></svg>';
+    ob.onclick = () => { close(); isPort ? goOrder() : wantThis(it.id); };
     modal.hidden = false;
-    document.body.style.overflow = "hidden";
-    $(".modal__close", modal).focus();
+    document.documentElement.style.overflow = "hidden";
+    requestAnimationFrame(() => { track.scrollLeft = track.clientWidth * start; upd(); });
+    $(".pm__close", modal).focus({ preventScroll: true });
   }
-  function closeModal() {
+  function close() {
     modal.hidden = true;
-    document.body.style.overflow = "";
+    document.documentElement.style.overflow = "";
     if (lastFocus) lastFocus.focus({ preventScroll: true });
   }
-  modal.addEventListener("click", (e) => { if (e.target.closest("[data-close]")) closeModal(); });
+  modal.addEventListener("click", (e) => { if (e.target.closest("[data-close]")) close(); });
   document.addEventListener("keydown", (e) => {
     if (modal.hidden) return;
-    if (e.key === "Escape") closeModal();
-    if ((e.key === "ArrowRight" || e.key === "ArrowLeft") && current) {
-      const btns = $$("#modalThumbs button");
-      const i = btns.findIndex((b) => b.getAttribute("aria-current") === "true");
-      const n = (i + (e.key === "ArrowRight" ? 1 : -1) + btns.length) % btns.length;
-      btns[n] && btns[n].click();
-    }
+    if (e.key === "Escape") close();
+    if (e.key === "ArrowRight") track.scrollBy({ left: track.clientWidth, behavior: "smooth" });
+    if (e.key === "ArrowLeft") track.scrollBy({ left: -track.clientWidth, behavior: "smooth" });
   });
 
-  /* ---------- «Хочу такого» → форма ---------- */
-  function wantThis(id) {
-    if (window.KorkaOrder) window.KorkaOrder.preselect(id);
-    document.getElementById("order").scrollIntoView({ behavior: "smooth" });
+  function goOrder() { document.getElementById("order").scrollIntoView({ behavior: "smooth" }); }
+  function wantThis(id) { if (window.KorkaOrder) window.KorkaOrder.preselect(id); goOrder(); }
+
+  /* ---------- шапка, меню, кнопка «Заказать» ---------- */
+  const hdr = $("#hdr"), menuBtn = $("#menuBtn"), fab = $("#fab");
+  const hero = $(".hero"), order = $("#order");
+  const vis = { hero: true, order: false };
+  const sync = () => { hdr.classList.toggle("is-solid", !vis.hero); fab.classList.toggle("is-on", !vis.hero && !vis.order); };
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(([e]) => { vis.hero = e.isIntersecting; sync(); }, { rootMargin: "-72px 0px 0px 0px" }).observe(hero);
+    new IntersectionObserver(([e]) => { vis.order = e.isIntersecting; sync(); }).observe(order);
+  } else hdr.classList.add("is-solid");
+  menuBtn.addEventListener("click", () => {
+    const open = !hdr.classList.contains("is-open");
+    hdr.classList.toggle("is-open", open);
+    menuBtn.setAttribute("aria-expanded", open);
+    document.documentElement.style.overflow = open ? "hidden" : "";
+  });
+  $$("#nav a").forEach((a) => a.addEventListener("click", () => {
+    hdr.classList.remove("is-open");
+    menuBtn.setAttribute("aria-expanded", false);
+    document.documentElement.style.overflow = "";
+  }));
+
+  /* ---------- плавное появление ---------- */
+  if ("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const els = $$(".sec__head, .values article, .steps li, .band blockquote, .fit > div");
+    const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -8% 0px" });
+    els.forEach((el) => { el.classList.add("rv"); io.observe(el); });
   }
 
-  /* ---------- меню ---------- */
-  const burger = $("#burger"), nav = $("#nav");
-  burger.addEventListener("click", () => {
-    const open = !nav.classList.contains("is-open");
-    nav.classList.toggle("is-open", open);
-    burger.setAttribute("aria-expanded", open);
-  });
-  $$("a", nav).forEach((a) => a.addEventListener("click", () => { nav.classList.remove("is-open"); burger.setAttribute("aria-expanded", false); }));
-
-  /* ---------- ссылки из конфига ---------- */
   if (CFG.channelUrl) $("#channelLink").href = CFG.channelUrl;
   if (CFG.contactUsername) $("#dmLink").href = "https://t.me/" + CFG.contactUsername;
   $("#year").textContent = new Date().getFullYear();
