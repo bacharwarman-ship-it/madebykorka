@@ -13,17 +13,17 @@
 
   /* Фото: локальный файл → копия в Telegram → элемент убирается (никаких заглушек) */
   function photo(p, alt, opts = {}) {
-    const img = new Image();
+    const img = document.createElement("img");
     img.alt = alt || "";
     img.decoding = "async";
-    if (!opts.eager) img.loading = "lazy";
+    img.loading = opts.eager ? "eager" : "lazy";
     if (opts.className) img.className = opts.className;
     let triedCdn = false;
     img.onerror = () => {
       if (!triedCdn && CFG.useTelegramCdnFallback !== false && p && p.cdn) { triedCdn = true; img.src = p.cdn; return; }
       if (opts.onFail) opts.onFail(img); else img.remove();
     };
-    if (p) img.src = p.path; else img.onerror();
+    if (p && p.path) img.src = p.path; else img.onerror();
     return img;
   }
   window.KorkaPhoto = { photo };
